@@ -1,0 +1,191 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Artist API",
+        "description": "Artist API",
+        "version": "1.00"
+    },
+    "servers": [
+        {
+            "url": "http://localhost",
+            "description": "Dev"
+        }
+    ],
+    "paths": {
+        "/api/v1/artists": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Get all artists",
+                "description": "Returns paginated artists resource. Can filtred by 'active' and 'email' fields",
+                "operationId": "get-all-artists",
+                "parameters": [
+                    {
+                        "name": "filter[email]",
+                        "in": "query",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "example": "ma"
+                    },
+                    {
+                        "name": "filter[active]",
+                        "in": "query",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Collection"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Artist"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Collection": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": "any"
+                    },
+                    "links": {
+                        "properties": {
+                            "first": {
+                                "type": "string",
+                                "example": "http://localhost/api/v1/resourceName?page=1"
+                            },
+                            "last": {
+                                "type": "string",
+                                "example": "http://localhost/api/v1/resourceName?page=100"
+                            },
+                            "prev": {
+                                "type": "string",
+                                "example": "null",
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "next": {
+                                "type": "string",
+                                "example": "http://localhost/api/v1/resourceName?page=2",
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "meta": {
+                        "properties": {
+                            "current_page": {
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "from": {
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "last_page": {
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "path": {
+                                "type": "string",
+                                "example": "http://localhost/api/v1/resourceName"
+                            },
+                            "per_page": {
+                                "type": "integer",
+                                "example": "25"
+                            },
+                            "to": {
+                                "type": "integer",
+                                "example": "25"
+                            },
+                            "total": {
+                                "type": "integer",
+                                "example": "250"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Artist": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "example": "Firstname"
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "example": "Lastname"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@example.com"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "example": "true"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-02-06T15:43:40.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2024-02-06T15:43:40.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Artists"
+        }
+    ]
+}
