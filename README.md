@@ -8,13 +8,13 @@ Public API to get info about artist
 
 ## Installation
 
-Clone project:
+1. Clone project:
 
 ```
-git clone  artists-test
+git clone git@github.com:a-pivavarau/artists-test.git artists-test && cd artists-test
 ```
 
-To install sail and project dependencies run:
+2. Install sail and project dependencies run:
 
 ```
 docker run --rm \
@@ -22,15 +22,20 @@ docker run --rm \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     laravelsail/php83-composer:latest \
-    composer install --ignore-platform-reqs
+    composer install --ignore-platform-reqs && cp .env.example .env
 ```
 
-To run project: 
+3. Run project: 
 
 ```
 ./vendor/bin/sail up
 ```
 
+4. Generate app keys
+
+```
+./vendor/bin/sail artisan key:generate
+```
 [Sail Documentation](https://laravel.com/docs/10.x/installation#docker-installation-using-sail)
 
 ### Run migrations
